@@ -1,0 +1,548 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A20000000000000000000021 /* AdaptiveASRC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000002 /* AdaptiveASRC.cpp */; };
+		A20000000000000000000022 /* ClockDomainBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000003 /* ClockDomainBridge.cpp */; };
+		A20000000000000000000023 /* DeviceRenderSession.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000004 /* DeviceRenderSession.cpp */; };
+		A20000000000000000000024 /* RealtimeBusLimiter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000005 /* RealtimeBusLimiter.cpp */; };
+		A20000000000000000000025 /* RealtimeCallbackGate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000006 /* RealtimeCallbackGate.cpp */; };
+		A20000000000000000000026 /* RealtimeMixer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000007 /* RealtimeMixer.cpp */; };
+		A20000000000000000000028 /* RealtimeRingBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000009 /* RealtimeRingBuffer.cpp */; };
+		A20000000000000000000029 /* RouteBinding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000A /* RouteBinding.cpp */; };
+		A2000000000000000000002A /* Vendor/libsamplerate/src/samplerate.c in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000B /* Vendor/libsamplerate/src/samplerate.c */; };
+		A2000000000000000000002B /* Vendor/libsamplerate/src/src_linear.c in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000C /* Vendor/libsamplerate/src/src_linear.c */; };
+		A2000000000000000000002C /* Vendor/libsamplerate/src/src_sinc.c in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000D /* Vendor/libsamplerate/src/src_sinc.c */; };
+		A2000000000000000000002D /* Vendor/libsamplerate/src/src_zoh.c in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000E /* Vendor/libsamplerate/src/src_zoh.c */; };
+		A2000000000000000000002E /* include/RealtimeCore.h in Headers */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000F /* include/RealtimeCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A2000000000000000000002F /* CaptureFanout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000010 /* CaptureFanout.cpp */; };
+		A30000000000000000000021 /* Sources/音频切换/Companion/PanoramaWireProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30000000000000000000020 /* Sources/音频切换/Companion/PanoramaWireProtocol.swift */; };
+		A30000000000000000000023 /* Sources/音频切换/Companion/PanoramaPairingTLS.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30000000000000000000022 /* Sources/音频切换/Companion/PanoramaPairingTLS.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		035432A73015238800E31F49 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A1000000000000000000000A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A20000000000000000000040;
+			remoteInfo = RealtimeCore;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		A10000000000000000000001 /* 音频切换.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "音频切换.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A20000000000000000000001 /* libRealtimeCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRealtimeCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		A20000000000000000000002 /* AdaptiveASRC.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AdaptiveASRC.cpp; sourceTree = "<group>"; };
+		A20000000000000000000003 /* ClockDomainBridge.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ClockDomainBridge.cpp; sourceTree = "<group>"; };
+		A20000000000000000000004 /* DeviceRenderSession.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DeviceRenderSession.cpp; sourceTree = "<group>"; };
+		A20000000000000000000005 /* RealtimeBusLimiter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RealtimeBusLimiter.cpp; sourceTree = "<group>"; };
+		A20000000000000000000006 /* RealtimeCallbackGate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RealtimeCallbackGate.cpp; sourceTree = "<group>"; };
+		A20000000000000000000007 /* RealtimeMixer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RealtimeMixer.cpp; sourceTree = "<group>"; };
+		A20000000000000000000009 /* RealtimeRingBuffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RealtimeRingBuffer.cpp; sourceTree = "<group>"; };
+		A2000000000000000000000A /* RouteBinding.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RouteBinding.cpp; sourceTree = "<group>"; };
+		A2000000000000000000000B /* Vendor/libsamplerate/src/samplerate.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Vendor/libsamplerate/src/samplerate.c; sourceTree = "<group>"; };
+		A2000000000000000000000C /* Vendor/libsamplerate/src/src_linear.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Vendor/libsamplerate/src/src_linear.c; sourceTree = "<group>"; };
+		A2000000000000000000000D /* Vendor/libsamplerate/src/src_sinc.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Vendor/libsamplerate/src/src_sinc.c; sourceTree = "<group>"; };
+		A2000000000000000000000E /* Vendor/libsamplerate/src/src_zoh.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Vendor/libsamplerate/src/src_zoh.c; sourceTree = "<group>"; };
+		A2000000000000000000000F /* include/RealtimeCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = include/RealtimeCore.h; sourceTree = "<group>"; };
+		A20000000000000000000010 /* CaptureFanout.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CaptureFanout.cpp; sourceTree = "<group>"; };
+		A30000000000000000000001 /* 音频切换伴侣.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "音频切换伴侣.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A30000000000000000000020 /* Sources/音频切换/Companion/PanoramaWireProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/音频切换/Companion/PanoramaWireProtocol.swift"; sourceTree = SOURCE_ROOT; };
+		A30000000000000000000022 /* Sources/音频切换/Companion/PanoramaPairingTLS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/音频切换/Companion/PanoramaPairingTLS.swift"; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		A10000000000000000000002 /* Sources/音频切换 */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Sources/音频切换";
+			sourceTree = "<group>";
+		};
+		A30000000000000000000002 /* Sources/音频切换伴侣 */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Sources/音频切换伴侣";
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A10000000000000000000003 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A30000000000000000000003 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		035431F23015238800E31F49 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				A30000000000000000000020 /* Sources/音频切换/Companion/PanoramaWireProtocol.swift */,
+				A30000000000000000000022 /* Sources/音频切换/Companion/PanoramaPairingTLS.swift */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		A10000000000000000000004 = {
+			isa = PBXGroup;
+			children = (
+				A10000000000000000000002 /* Sources/音频切换 */,
+				A30000000000000000000002 /* Sources/音频切换伴侣 */,
+				A20000000000000000000030 /* RealtimeCore */,
+				A10000000000000000000005 /* Products */,
+				035431F23015238800E31F49 /* Recovered References */,
+			);
+			sourceTree = "<group>";
+		};
+		A10000000000000000000005 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A10000000000000000000001 /* 音频切换.app */,
+				A30000000000000000000001 /* 音频切换伴侣.app */,
+				A20000000000000000000001 /* libRealtimeCore.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A20000000000000000000030 /* RealtimeCore */ = {
+			isa = PBXGroup;
+			children = (
+				A20000000000000000000002 /* AdaptiveASRC.cpp */,
+				A20000000000000000000003 /* ClockDomainBridge.cpp */,
+				A20000000000000000000004 /* DeviceRenderSession.cpp */,
+				A20000000000000000000005 /* RealtimeBusLimiter.cpp */,
+				A20000000000000000000006 /* RealtimeCallbackGate.cpp */,
+				A20000000000000000000007 /* RealtimeMixer.cpp */,
+				A20000000000000000000009 /* RealtimeRingBuffer.cpp */,
+				A2000000000000000000000A /* RouteBinding.cpp */,
+				A2000000000000000000000B /* Vendor/libsamplerate/src/samplerate.c */,
+				A2000000000000000000000C /* Vendor/libsamplerate/src/src_linear.c */,
+				A2000000000000000000000D /* Vendor/libsamplerate/src/src_sinc.c */,
+				A2000000000000000000000E /* Vendor/libsamplerate/src/src_zoh.c */,
+				A2000000000000000000000F /* include/RealtimeCore.h */,
+				A20000000000000000000010 /* CaptureFanout.cpp */,
+			);
+			path = RealtimeCore;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		A20000000000000000000043 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A2000000000000000000002E /* include/RealtimeCore.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		A10000000000000000000006 /* 音频切换 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A10000000000000000000007 /* Build configuration list for PBXNativeTarget "音频切换" */;
+			buildPhases = (
+				A10000000000000000000008 /* Sources */,
+				A10000000000000000000003 /* Frameworks */,
+				A10000000000000000000009 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A20000000000000000000060 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				A10000000000000000000002 /* Sources/音频切换 */,
+			);
+			name = "音频切换";
+			packageProductDependencies = (
+			);
+			productName = "音频切换";
+			productReference = A10000000000000000000001 /* 音频切换.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A20000000000000000000040 /* RealtimeCore */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A20000000000000000000041 /* Build configuration list for PBXNativeTarget "RealtimeCore" */;
+			buildPhases = (
+				A20000000000000000000042 /* Sources */,
+				A20000000000000000000043 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RealtimeCore;
+			productName = RealtimeCore;
+			productReference = A20000000000000000000001 /* libRealtimeCore.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		A30000000000000000000006 /* 音频切换伴侣 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A30000000000000000000007 /* Build configuration list for PBXNativeTarget "音频切换伴侣" */;
+			buildPhases = (
+				A30000000000000000000008 /* Sources */,
+				A30000000000000000000003 /* Frameworks */,
+				A30000000000000000000009 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				A30000000000000000000002 /* Sources/音频切换伴侣 */,
+			);
+			name = "音频切换伴侣";
+			packageProductDependencies = (
+			);
+			productName = "音频切换伴侣";
+			productReference = A30000000000000000000001 /* 音频切换伴侣.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A1000000000000000000000A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2610;
+				LastUpgradeCheck = 2610;
+				TargetAttributes = {
+					A10000000000000000000006 = {
+						CreatedOnToolsVersion = 26.1;
+					};
+					A30000000000000000000006 = {
+						CreatedOnToolsVersion = 26.1;
+					};
+				};
+			};
+			buildConfigurationList = A1000000000000000000000B /* Build configuration list for PBXProject "音频切换" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A10000000000000000000004;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = A10000000000000000000005 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A10000000000000000000006 /* 音频切换 */,
+				A30000000000000000000006 /* 音频切换伴侣 */,
+				A20000000000000000000040 /* RealtimeCore */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A10000000000000000000009 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A30000000000000000000009 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A10000000000000000000008 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A20000000000000000000042 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A20000000000000000000021 /* AdaptiveASRC.cpp in Sources */,
+				A20000000000000000000022 /* ClockDomainBridge.cpp in Sources */,
+				A20000000000000000000023 /* DeviceRenderSession.cpp in Sources */,
+				A20000000000000000000024 /* RealtimeBusLimiter.cpp in Sources */,
+				A20000000000000000000025 /* RealtimeCallbackGate.cpp in Sources */,
+				A20000000000000000000026 /* RealtimeMixer.cpp in Sources */,
+				A20000000000000000000028 /* RealtimeRingBuffer.cpp in Sources */,
+				A20000000000000000000029 /* RouteBinding.cpp in Sources */,
+				A2000000000000000000002A /* Vendor/libsamplerate/src/samplerate.c in Sources */,
+				A2000000000000000000002B /* Vendor/libsamplerate/src/src_linear.c in Sources */,
+				A2000000000000000000002C /* Vendor/libsamplerate/src/src_sinc.c in Sources */,
+				A2000000000000000000002D /* Vendor/libsamplerate/src/src_zoh.c in Sources */,
+				A2000000000000000000002F /* CaptureFanout.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A30000000000000000000008 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A30000000000000000000021 /* Sources/音频切换/Companion/PanoramaWireProtocol.swift in Sources */,
+				A30000000000000000000023 /* Sources/音频切换/Companion/PanoramaPairingTLS.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A20000000000000000000060 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A20000000000000000000040 /* RealtimeCore */;
+			targetProxy = 035432A73015238800E31F49 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		A1000000000000000000000C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_TESTABILITY = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				MACOSX_DEPLOYMENT_TARGET = 14.2;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		A1000000000000000000000D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				MACOSX_DEPLOYMENT_TARGET = 14.2;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		A1000000000000000000000E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Configuration/音频切换.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				ENABLE_HARDENED_RUNTIME = YES;
+				EXECUTABLE_NAME = YinPinQieHuan;
+				GENERATE_INFOPLIST_FILE = NO;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/RealtimeCore/include";
+				INFOPLIST_FILE = "Configuration/音频切换-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.2;
+				MARKETING_VERSION = 1.3;
+				OTHER_LDFLAGS = (
+					"-lc++",
+					"$(BUILT_PRODUCTS_DIR)/libRealtimeCore.a",
+				);
+				OTHER_SWIFT_FLAGS = "-Xcc -fmodule-map-file=$(SRCROOT)/RealtimeCore/include/module.modulemap";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mankeipun.yinpinqiehuan;
+				PRODUCT_MODULE_NAME = YinPinQieHuan;
+				PRODUCT_NAME = "音频切换";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		A1000000000000000000000F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Configuration/音频切换.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 2;
+				ENABLE_HARDENED_RUNTIME = YES;
+				EXECUTABLE_NAME = YinPinQieHuan;
+				GENERATE_INFOPLIST_FILE = NO;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/RealtimeCore/include";
+				INFOPLIST_FILE = "Configuration/音频切换-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.2;
+				MARKETING_VERSION = 1.3;
+				OTHER_LDFLAGS = (
+					"-lc++",
+					"$(BUILT_PRODUCTS_DIR)/libRealtimeCore.a",
+				);
+				OTHER_SWIFT_FLAGS = "-Xcc -fmodule-map-file=$(SRCROOT)/RealtimeCore/include/module.modulemap";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mankeipun.yinpinqiehuan;
+				PRODUCT_MODULE_NAME = YinPinQieHuan;
+				PRODUCT_NAME = "音频切换";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		A20000000000000000000050 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				DEFINES_MODULE = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"ENABLE_SINC_FAST_CONVERTER=1",
+					"HAVE_STDBOOL_H=1",
+					"PACKAGE=\\\"libsamplerate\\\"",
+					"VERSION=\\\"0.2.2\\\"",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/RealtimeCore/include",
+					"$(SRCROOT)/RealtimeCore/Vendor/libsamplerate/include",
+					"$(SRCROOT)/RealtimeCore/Vendor/libsamplerate/src",
+				);
+				MODULEMAP_FILE = "$(SRCROOT)/RealtimeCore/include/module.modulemap";
+				PRODUCT_MODULE_NAME = RealtimeCore;
+				PRODUCT_NAME = RealtimeCore;
+				PUBLIC_HEADERS_FOLDER_PATH = Headers;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		A20000000000000000000051 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				DEFINES_MODULE = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"ENABLE_SINC_FAST_CONVERTER=1",
+					"HAVE_STDBOOL_H=1",
+					"PACKAGE=\\\"libsamplerate\\\"",
+					"VERSION=\\\"0.2.2\\\"",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/RealtimeCore/include",
+					"$(SRCROOT)/RealtimeCore/Vendor/libsamplerate/include",
+					"$(SRCROOT)/RealtimeCore/Vendor/libsamplerate/src",
+				);
+				MODULEMAP_FILE = "$(SRCROOT)/RealtimeCore/include/module.modulemap";
+				PRODUCT_MODULE_NAME = RealtimeCore;
+				PRODUCT_NAME = RealtimeCore;
+				PUBLIC_HEADERS_FOLDER_PATH = Headers;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		A3000000000000000000000E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "Configuration/音频切换伴侣-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				MARKETING_VERSION = 1.2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mankeipun.yinpinqiehuan.companion;
+				PRODUCT_MODULE_NAME = YinPinQieHuanCompanion;
+				PRODUCT_NAME = "音频切换伴侣";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		A3000000000000000000000F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "Configuration/音频切换伴侣-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				MARKETING_VERSION = 1.2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mankeipun.yinpinqiehuan.companion;
+				PRODUCT_MODULE_NAME = YinPinQieHuanCompanion;
+				PRODUCT_NAME = "音频切换伴侣";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A10000000000000000000007 /* Build configuration list for PBXNativeTarget "音频切换" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A1000000000000000000000E /* Debug */,
+				A1000000000000000000000F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A1000000000000000000000B /* Build configuration list for PBXProject "音频切换" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A1000000000000000000000C /* Debug */,
+				A1000000000000000000000D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A20000000000000000000041 /* Build configuration list for PBXNativeTarget "RealtimeCore" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A20000000000000000000050 /* Debug */,
+				A20000000000000000000051 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A30000000000000000000007 /* Build configuration list for PBXNativeTarget "音频切换伴侣" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A3000000000000000000000E /* Debug */,
+				A3000000000000000000000F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A1000000000000000000000A /* Project object */;
+}

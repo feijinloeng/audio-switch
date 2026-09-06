@@ -1,0 +1,39 @@
+# macOS Finder metadata
+.DS_Store
+
+# Swift Package Manager
+.build/
+.swiftpm/
+
+# Xcode build products and test results
+DerivedData/
+.derived-data/
+build/
+*.xcarchive/
+*.xcresult/
+*.ipa
+*.dmg
+
+# Xcode user-specific state
+*.xcuserstate
+xcuserdata/
+*.xccheckout
+*.xcscmblueprint
+
+# Local project notes and automation instructions
+/Private/
+/AGENTS.md
+/privacy-site/
+
+# Signing credentials and local configuration
+*.p12
+*.cer
+*.mobileprovision
+*.p8
+*.pem
+*.key
+api_key*.json
+.env
+.env.*
+!.env.example
+*.local.*

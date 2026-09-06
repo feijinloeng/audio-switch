@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v4
+      - name: Swift package tests with complete concurrency checking
+        run: swift test -Xswiftc -strict-concurrency=complete
+      - name: Build macOS app
+        run: >-
+          xcodebuild -project 音频切换.xcodeproj -scheme 音频切换
+          -configuration Debug SWIFT_STRICT_CONCURRENCY=complete
+          CODE_SIGNING_ALLOWED=NO build
+      - name: Build macOS app (Release)
+        run: >-
+          xcodebuild -project 音频切换.xcodeproj -scheme 音频切换
+          -configuration Release SWIFT_STRICT_CONCURRENCY=complete
+          CODE_SIGNING_ALLOWED=NO build
+      - name: Build iPhone companion
+        run: >-
+          xcodebuild -project 音频切换.xcodeproj -scheme 音频切换伴侣
+          -configuration Debug -destination 'generic/platform=iOS Simulator'
+          SWIFT_STRICT_CONCURRENCY=complete CODE_SIGNING_ALLOWED=NO build
+      - name: Build iPhone companion (Release)
+        run: >-
+          xcodebuild -project 音频切换.xcodeproj -scheme 音频切换伴侣
+          -configuration Release -destination 'generic/platform=iOS Simulator'
+          SWIFT_STRICT_CONCURRENCY=complete CODE_SIGNING_ALLOWED=NO build
