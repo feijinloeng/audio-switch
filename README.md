@@ -209,31 +209,6 @@ Scripts/                         本地构建、运行和日志脚本
 4. `DeviceRenderSession`：完成单个设备的渲染、增益和延迟处理。
 5. `RealtimeBusLimiter`：限制混音总线峰值，减少削波和爆音。
 
-## 权限与安全
-
-### 不需要提交密钥
-
-本仓库不需要任何密钥才能编译和运行测试。
-
-以下文件或信息不要提交：
-
-1. Apple 签名证书和 Provisioning Profile。
-2. App Store Connect `.p8` 私钥。
-3. GitHub Token 和 SSH 私钥。
-4. 本机发布记录、构建产物和 Xcode 本地状态文件。
-
-签名信息应保存在本机钥匙串中；自动化构建需要时，使用 GitHub Actions Secrets。
-
-工程不固定任何个人 Apple 开发团队。需要在 Xcode 中签名运行或发布时，请选择你自己的 Team 和证书。
-
-### 公开前检查
-
-项目的 `.gitignore` 已排除常见的密钥文件和本地文件。公开仓库前，建议再检查一次：
-
-1. `git diff` 中没有个人信息或敏感配置。
-2. GitHub 的 Secret scanning 没有发出警告。
-3. 仓库中没有证书、私钥或真实设备配对信息。
-
 ## 参与贡献
 
 欢迎反馈以下内容：
