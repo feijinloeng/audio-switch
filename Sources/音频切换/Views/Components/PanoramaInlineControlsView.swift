@@ -52,6 +52,16 @@ struct PanoramaInlineControlsView: View {
     var body: some View {
         let outputStateRevision = audioEngine.outputStateRevision
         VStack(alignment: .leading, spacing: DesignTokens.Spacing.sm) {
+            if audioEngine.isPanoramaGroupConfigurationReadOnly {
+                Label(
+                    "全景组配置来自较新版本或无法安全读取，当前只读，原文件不会被覆盖。",
+                    systemImage: "lock.fill"
+                )
+                .font(DesignTokens.Typography.caption)
+                .foregroundStyle(.orange)
+                .fixedSize(horizontal: false, vertical: true)
+            }
+
             endpointPicker
 
             if let selectionMessage {
@@ -184,7 +194,10 @@ struct PanoramaInlineControlsView: View {
             )
         }
         .buttonStyle(.pressable)
-        .disabled(isSelectionDisabled(candidate))
+        .disabled(
+            audioEngine.isPanoramaGroupConfigurationReadOnly
+                || isSelectionDisabled(candidate)
+        )
         .animation(DevicePickerMotionPolicy.selection.animation, value: isSelected)
         .help(unavailableReason(for: candidate) ?? candidate.name)
         .accessibilityLabel(candidate.name)
@@ -216,6 +229,7 @@ struct PanoramaInlineControlsView: View {
                     if !editing { persistManualDelay() }
                 }
             )
+            .disabled(audioEngine.isPanoramaGroupConfigurationReadOnly)
         }
     }
 

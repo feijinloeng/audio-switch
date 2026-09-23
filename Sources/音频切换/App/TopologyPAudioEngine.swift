@@ -97,6 +97,8 @@ final class TopologyPAudioEngine {
     private var groupsByIdentity: [AppIdentity: [AudioProcessGroup]] = [:]
     private var appsByPID: [pid_t: AudioApp] = [:]
     private var descriptorsByUID: [String: OutputDeviceDescriptor] = [:]
+    private var previousOutputSnapshotByUID: [String: OutputDeviceDescriptor]?
+    private var previousOutputSnapshotEpoch: UInt64?
     private var outputDeviceConnectionOrder = OutputDeviceConnectionOrder()
     private var routeRequestTokens: [AppIdentity: UUID] = [:]
     /// The last process-object generation committed to every managed route.
@@ -143,6 +145,7 @@ final class TopologyPAudioEngine {
     private(set) var outputStateRevision: UInt64 = 0
     private(set) var defaultOutputDeviceUID: String = ""
     private(set) var panoramaGroupConfiguration: PanoramaGroupConfiguration
+    private(set) var isPanoramaGroupConfigurationReadOnly = false
     private(set) var isPanoramaCompanionAdvertising = false
     var panoramaPairingFingerprint: String { companionHost.pairingFingerprint }
     private(set) var panoramaCompanionEndpointStatus: PanoramaCompanionEndpointStatus?
@@ -150,6 +153,8 @@ final class TopologyPAudioEngine {
     /// whenever the authenticated companion publishes a new endpoint status so
     /// an already-open popup redraws its endpoint picker immediately.
     var onPanoramaCompanionEndpointStatusChanged: ((PanoramaCompanionEndpointStatus) -> Void)?
+    var onPanoramaGroupReadOnlyChanged: ((Bool) -> Void)?
+    var onOutputDeviceDisconnected: ((String) -> Void)?
 
     init(
         permission: AudioPermissionManager,
@@ -196,6 +201,8 @@ final class TopologyPAudioEngine {
         }
         panoramaGroupStore.onLoaded = { [weak self, panoramaGroupStore] in
             guard let self else { return }
+            self.isPanoramaGroupConfigurationReadOnly = panoramaGroupStore.isReadOnly
+            self.onPanoramaGroupReadOnlyChanged?(panoramaGroupStore.isReadOnly)
             let sanitized = Self.sanitizedPanoramaConfiguration(
                 panoramaGroupStore.configuration
             )
@@ -841,10 +848,24 @@ final class TopologyPAudioEngine {
     private func refreshOutputs(snapshot: HALOutputSnapshot) {
         // 系统 HAL 快照的设备 UID 理论上唯一，但防御重复 UID 以免整 App 崩溃
         // （与 refreshProcesses 的重复 PID 崩溃同类）。
-        descriptorsByUID = Dictionary(
+        let currentSnapshotByUID = Dictionary(
             snapshot.devices.map { ($0.uid, $0) },
             uniquingKeysWith: { first, _ in first }
         )
+        // Establish the first snapshot as a baseline, and suppress disconnect
+        // alerts across a Core Audio service restart where the full device list
+        // may be temporarily rebuilt.
+        if previousOutputSnapshotEpoch == snapshot.serviceEpoch,
+           let previousOutputSnapshotByUID {
+            for (uid, previous) in previousOutputSnapshotByUID
+            where previous.readiness.isPreflightReady
+                && currentSnapshotByUID[uid]?.readiness.isPreflightReady != true {
+                onOutputDeviceDisconnected?(previous.name)
+            }
+        }
+        previousOutputSnapshotByUID = currentSnapshotByUID
+        previousOutputSnapshotEpoch = snapshot.serviceEpoch
+        descriptorsByUID = currentSnapshotByUID
         defaultOutputDeviceUID = snapshot.defaultDeviceUID ?? ""
         let discoveredDevices: [AudioDevice] = snapshot.devices.compactMap { descriptor in
             guard let deviceID = hal.resolveOutputDeviceID(uid: descriptor.uid) else { return nil }

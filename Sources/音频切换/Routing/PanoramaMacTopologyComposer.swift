@@ -275,6 +275,9 @@ struct PanoramaMacTopologyComposer: Sendable {
         var preparedBindings: [PreparedBinding] = []
         var activeBindings: [ActiveBinding] = []
         var assignments: [PanoramaMacActiveBinding] = []
+        var rollbackTargetsByCaptureToken: [
+            UUID: (capture: ActiveCapture, targets: [RouteBindingTarget])
+        ] = [:]
         do {
             for capture in orderedCaptures {
                 preparedBindings.append(
@@ -299,15 +302,23 @@ struct PanoramaMacTopologyComposer: Sendable {
                 let existingTargets = resources.bindings
                     .filter { $0.capture.token == activeCapture.token }
                     .map { RouteBindingTarget($0.binding) }
+                let originalTargets = existingTargets
+                    + (retainingAdditionalTargetsByCapture[activeCapture.token] ?? [])
                 guard let newAssignment = assignments.first(where: {
                     $0.capture.token == activeCapture.token
                 }) else {
                     throw PanoramaMacTopologyError.lifecycleFailed
                 }
-                let targets = existingTargets
-                    + (retainingAdditionalTargetsByCapture[activeCapture.token] ?? [])
-                    + [RouteBindingTarget(newAssignment.binding)]
-                _ = try await capture.publishBindings(targets, for: activeCapture)
+                // Save the exact live fan-out before publishing the new target.
+                // `publishBindings` only replaces the snapshot; its old raw
+                // binding pointers remain borrowed until a later acknowledgement.
+                rollbackTargetsByCaptureToken[activeCapture.token] = (
+                    capture: activeCapture,
+                    targets: originalTargets
+                )
+                let targets = originalTargets + [RouteBindingTarget(newAssignment.binding)]
+                let publication = try await capture.publishBindings(targets, for: activeCapture)
+                try await capture.acknowledge(publication)
             }
 
             try await binding.waitForPreRoll(
@@ -324,7 +335,36 @@ struct PanoramaMacTopologyComposer: Sendable {
                 initialGain: 0
             )
         } catch {
+            // Restore every capture snapshot that may have seen a joining
+            // binding, then wait until its callback has left the newer snapshot
+            // before retiring that binding. If restore/acknowledgement fails,
+            // keep that binding allocated: retaining memory on this exceptional
+            // path is safer than freeing an address a live callback may use.
+            var capturesSafeToRetire: Set<UUID> = []
+            for activeCapture in orderedCaptures.reversed() {
+                guard let rollback = rollbackTargetsByCaptureToken[activeCapture.token] else {
+                    continue
+                }
+                do {
+                    let publication = try await capture.publishBindings(
+                        rollback.targets,
+                        for: rollback.capture
+                    )
+                    try await capture.acknowledge(publication)
+                    capturesSafeToRetire.insert(activeCapture.token)
+                } catch {
+                    // Keep all new bindings for this capture in the backend.
+                }
+            }
+
             for active in activeBindings.reversed() {
+                if let assignment = assignments.first(where: {
+                    $0.binding.token == active.token
+                }),
+                   rollbackTargetsByCaptureToken[assignment.capture.token] != nil,
+                   !capturesSafeToRetire.contains(assignment.capture.token) {
+                    continue
+                }
                 await binding.teardown(active)
             }
             await output.stop(activeOutput)

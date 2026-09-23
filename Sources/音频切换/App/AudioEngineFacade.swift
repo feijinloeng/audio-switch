@@ -15,14 +15,19 @@ final class AudioEngineFacade {
     /// SwiftUI views. Reaching through two observable objects can otherwise
     /// miss an invalidation while a status-item popup is already open.
     private(set) var panoramaCompanionEndpointStatus: PanoramaCompanionEndpointStatus?
+    private(set) var isPanoramaGroupConfigurationReadOnly: Bool
 
     init(backend: TopologyPAudioEngine) {
         self.backend = backend
         permission = backend.permission
         settingsManager = backend.settingsManager
         panoramaCompanionEndpointStatus = backend.panoramaCompanionEndpointStatus
+        isPanoramaGroupConfigurationReadOnly = backend.isPanoramaGroupConfigurationReadOnly
         backend.onPanoramaCompanionEndpointStatusChanged = { [weak self] status in
             self?.panoramaCompanionEndpointStatus = status
+        }
+        backend.onPanoramaGroupReadOnlyChanged = { [weak self] isReadOnly in
+            self?.isPanoramaGroupConfigurationReadOnly = isReadOnly
         }
     }
 
@@ -43,6 +48,10 @@ final class AudioEngineFacade {
 
     func start() { backend.start() }
     func stop() { backend.stop() }
+
+    func setOutputDeviceDisconnectHandler(_ handler: ((String) -> Void)?) {
+        backend.onOutputDeviceDisconnected = handler
+    }
 
     func setVolume(for app: AudioApp, to volume: Float) {
         backend.setVolume(for: app, to: volume)

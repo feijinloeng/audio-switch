@@ -6,6 +6,16 @@ private struct PanoramaGroupFileRecord: Codable, Sendable {
     let configuration: PanoramaGroupConfiguration
 }
 
+private struct PanoramaGroupFileHeader: Decodable {
+    let version: Int
+}
+
+private struct PanoramaGroupLoadResult: Sendable {
+    let record: PanoramaGroupFileRecord?
+    let isReadOnly: Bool
+    let error: String?
+}
+
 private actor PanoramaGroupPersistence {
     private let url: URL
 
@@ -13,20 +23,59 @@ private actor PanoramaGroupPersistence {
         self.url = url
     }
 
-    func load() -> (PanoramaGroupFileRecord?, String?) {
-        guard FileManager.default.fileExists(atPath: url.path) else { return (nil, nil) }
+    func load() -> PanoramaGroupLoadResult {
+        guard FileManager.default.fileExists(atPath: url.path) else {
+            return PanoramaGroupLoadResult(record: nil, isReadOnly: false, error: nil)
+        }
+
+        let data: Data
         do {
-            let data = try Data(contentsOf: url)
-            guard let record = try? JSONDecoder().decode(PanoramaGroupFileRecord.self, from: data) else {
-                let quarantineURL = url
-                    .deletingPathExtension()
-                    .appendingPathExtension("corrupt-\(Int(Date().timeIntervalSince1970)).json")
-                try FileManager.default.moveItem(at: url, to: quarantineURL)
-                return (nil, "全景组文件已损坏，已隔离为 \(quarantineURL.lastPathComponent)")
-            }
-            return (record, nil)
+            data = try Data(contentsOf: url)
         } catch {
-            return (nil, error.localizedDescription)
+            return PanoramaGroupLoadResult(
+                record: nil,
+                isReadOnly: true,
+                error: "无法读取全景组配置；为保护原文件，当前已禁止保存。\(error.localizedDescription)"
+            )
+        }
+
+        guard let header = try? JSONDecoder().decode(PanoramaGroupFileHeader.self, from: data),
+              header.version >= 0 else {
+            return quarantineCorruptFile()
+        }
+
+        if header.version > PanoramaGroupFileRecord.currentVersion {
+            let compatibleRecord = try? JSONDecoder().decode(PanoramaGroupFileRecord.self, from: data)
+            return PanoramaGroupLoadResult(
+                record: compatibleRecord,
+                isReadOnly: true,
+                error: "此全景组配置由较新版本创建（格式版本 \(header.version)）。当前版本已只读打开，不会覆盖原文件。"
+            )
+        }
+
+        guard let record = try? JSONDecoder().decode(PanoramaGroupFileRecord.self, from: data) else {
+            return quarantineCorruptFile()
+        }
+        return PanoramaGroupLoadResult(record: record, isReadOnly: false, error: nil)
+    }
+
+    private func quarantineCorruptFile() -> PanoramaGroupLoadResult {
+        let quarantineURL = url
+            .deletingPathExtension()
+            .appendingPathExtension("corrupt-\(UUID().uuidString).json")
+        do {
+            try FileManager.default.moveItem(at: url, to: quarantineURL)
+            return PanoramaGroupLoadResult(
+                record: nil,
+                isReadOnly: false,
+                error: "全景组文件已损坏，已隔离为 \(quarantineURL.lastPathComponent)"
+            )
+        } catch {
+            return PanoramaGroupLoadResult(
+                record: nil,
+                isReadOnly: true,
+                error: "全景组文件无法读取且未能隔离；为保护原文件，当前已禁止保存。\(error.localizedDescription)"
+            )
         }
     }
 
@@ -73,15 +122,21 @@ final class PanoramaGroupConfigurationStore {
     init(storageURL: URL) {
         persistence = PanoramaGroupPersistence(url: storageURL)
         Task { [weak self, persistence] in
-            let (record, error) = await persistence.load()
+            let result = await persistence.load()
             guard let self else { return }
-            if !self.hasLocalMutationBeforeLoad, let record {
+            let hadLocalMutationBeforeLoad = self.hasLocalMutationBeforeLoad
+            self.isReadOnly = result.isReadOnly
+            if let record = result.record,
+               !hadLocalMutationBeforeLoad || result.isReadOnly {
                 self.configuration = record.configuration
-                self.isReadOnly = record.version > PanoramaGroupFileRecord.currentVersion
             }
-            self.persistenceError = error
+            self.persistenceError = result.error
             self.isLoaded = true
+            self.hasLocalMutationBeforeLoad = false
             self.onLoaded?()
+            if hadLocalMutationBeforeLoad, !self.isReadOnly {
+                self.persist(self.configuration)
+            }
         }
     }
 
@@ -93,8 +148,15 @@ final class PanoramaGroupConfigurationStore {
 
     func save(_ configuration: PanoramaGroupConfiguration) {
         guard !isReadOnly else { return }
-        if !isLoaded { hasLocalMutationBeforeLoad = true }
         self.configuration = configuration
+        guard isLoaded else {
+            hasLocalMutationBeforeLoad = true
+            return
+        }
+        persist(configuration)
+    }
+
+    private func persist(_ configuration: PanoramaGroupConfiguration) {
         let record = PanoramaGroupFileRecord(
             version: PanoramaGroupFileRecord.currentVersion,
             configuration: configuration

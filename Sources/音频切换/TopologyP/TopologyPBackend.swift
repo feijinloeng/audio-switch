@@ -95,6 +95,7 @@ actor TopologyPBackend: CaptureSessionBackend, OutputSessionBackend, RouteBindin
         repeating: 0,
         count: PanoramaAudioPacket.framesPerPacket * PanoramaAudioPacket.channels
     )
+    private var panoramaNetworkLimiter: OpaquePointer?
     struct CaptureMetrics: Equatable, Sendable {
         let isRunning: Bool
         let sampleRate: Double
@@ -328,6 +329,18 @@ actor TopologyPBackend: CaptureSessionBackend, OutputSessionBackend, RouteBindin
                   !captureResource.localBindingTargets.isEmpty else {
                 throw RouteTransactionBackendError.commitFailed
             }
+            if panoramaNetworkLimiter == nil {
+                // The phone bus sums app streams before Int16 conversion, so it
+                // needs look-ahead limiting with a wider gain-reduction range.
+                guard let limiter = ypq_bus_limiter_create(
+                    Float(PanoramaAudioPacket.sampleRate),
+                    0.944,
+                    48.0
+                ) else {
+                    throw RouteTransactionBackendError.prepareFailed
+                }
+                panoramaNetworkLimiter = limiter
+            }
             if let existing = networkBindings.values.first(where: { $0.captureToken == capture.token }) {
                 attached.append(ActiveBinding(instanceID: existing.instanceID, token: existing.token))
                 continue
@@ -349,6 +362,10 @@ actor TopologyPBackend: CaptureSessionBackend, OutputSessionBackend, RouteBindin
                   session.publishCaptureBindings(allPointers, generation: generation) else {
                 networkBindings.removeValue(forKey: resource.token)
                 ypq_route_binding_destroy(pointer)
+                if networkBindings.isEmpty, let limiter = panoramaNetworkLimiter {
+                    ypq_bus_limiter_destroy(limiter)
+                    panoramaNetworkLimiter = nil
+                }
                 throw RouteTransactionBackendError.commitFailed
             }
             captureResource.bindingSnapshotGeneration = generation
@@ -407,6 +424,10 @@ actor TopologyPBackend: CaptureSessionBackend, OutputSessionBackend, RouteBindin
             _ = ypq_route_binding_finish_retirement(resource.pointer)
             ypq_route_binding_destroy(resource.pointer)
         }
+        if networkBindings.isEmpty, let limiter = panoramaNetworkLimiter {
+            ypq_bus_limiter_destroy(limiter)
+            panoramaNetworkLimiter = nil
+        }
     }
 
     /// Mixes fixed 5 ms blocks with the same atomic per-app gain/mute controls
@@ -415,7 +436,8 @@ actor TopologyPBackend: CaptureSessionBackend, OutputSessionBackend, RouteBindin
     /// generations draining the same rings is what made companion streams
     /// glitch. Actor-isolated control-plane work, never an audio render callback.
     func mixAllPanoramaNetworkPCM() -> Data? {
-        guard !networkBindings.isEmpty else { return nil }
+        guard !networkBindings.isEmpty,
+              let limiter = panoramaNetworkLimiter else { return nil }
         let frameCount = PanoramaAudioPacket.framesPerPacket
         for index in panoramaMixedScratch.indices {
             panoramaMixedScratch[index] = 0
@@ -437,6 +459,10 @@ actor TopologyPBackend: CaptureSessionBackend, OutputSessionBackend, RouteBindin
                 panoramaMixedScratch[index] += panoramaBindingScratch[index] * gain
             }
         }
+        panoramaMixedScratch.withUnsafeMutableBufferPointer { samples in
+            guard let baseAddress = samples.baseAddress else { return }
+            ypq_bus_limiter_process(limiter, baseAddress, UInt32(frameCount))
+        }
         // The network endpoint owns a continuous 48 kHz playout clock. A
         // temporarily empty capture ring must produce a silent frame rather
         // than a missing UDP packet, otherwise the iPhone repeatedly
@@ -445,7 +471,8 @@ actor TopologyPBackend: CaptureSessionBackend, OutputSessionBackend, RouteBindin
         pcm.withUnsafeMutableBytes { destination in
             guard let samples = destination.baseAddress?.assumingMemoryBound(to: Int16.self) else { return }
             for index in panoramaMixedScratch.indices {
-                let clamped = min(max(panoramaMixedScratch[index], -1), 1)
+                let mixed = panoramaMixedScratch[index].isFinite ? panoramaMixedScratch[index] : 0
+                let clamped = min(max(mixed, -1), 1)
                 samples[index] = Int16((clamped * Float(Int16.max)).rounded())
             }
         }
