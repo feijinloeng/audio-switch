@@ -11,7 +11,7 @@
 - 安装包通过 Apple 公证并装订票据，双击即可打开。
 - App 版本号改为跟随 Xcode 构建配置，不再写死在 Info.plist。
 
-## [1.3.0] - 2026-09-06
+## 1.3.0 - 2026-09-06（已删除的未公证版本）
 
 ### 新增
 
@@ -34,4 +34,3 @@
 
 [Unreleased]: https://github.com/feijinloeng/audio-switch/compare/v1.3.1...HEAD
 [1.3.1]: https://github.com/feijinloeng/audio-switch/releases/tag/v1.3.1
-[1.3.0]: https://github.com/feijinloeng/audio-switch/releases/tag/v1.3.0
