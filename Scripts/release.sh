@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
-# 用法：
-#   export APPLE_ID=你的AppleID邮箱
-#   export APPLE_APP_PASSWORD=abcd-efgh-ijkl-mnop   # appleid.apple.com 生成的 App 专用密码
+# 首次使用先存一次公证凭证（按提示粘贴 App 专用密码）：
+#   xcrun notarytool store-credentials audio-switch \
+#     --apple-id 你的AppleID邮箱 --team-id J394BNW2WG
+#
+# 之后每次发版：
 #   Scripts/release.sh 1.4.0
 #
-# 只构建不公证（测试用）：
-#   SKIP_NOTARIZE=1 Scripts/release.sh 1.4.0
+# 只构建不公证（测试用）：SKIP_NOTARIZE=1 Scripts/release.sh 1.4.0
 #
 # 产物在 .derived-data/release-artifacts/：dmg、zip、SHA256SUMS.txt
 set -euo pipefail
@@ -16,16 +17,12 @@ OUT_DIR="$ROOT_DIR/.derived-data/release-artifacts"
 BUILD_DIR="$ROOT_DIR/.derived-data/release"
 APP="$BUILD_DIR/Build/Products/Release/音频切换.app"
 IDENTITY="Developer ID Application: Wenqi Pan (J394BNW2WG)"
-TEAM_ID="J394BNW2WG"
 DMG="$OUT_DIR/audio-switch-macos-arm64-v$VERSION.dmg"
 ZIP="$OUT_DIR/audio-switch-macos-arm64-v$VERSION.zip"
 
 export DEVELOPER_DIR="${DEVELOPER_DIR:-/Applications/Xcode.app/Contents/Developer}"
 
-if [[ -z "${SKIP_NOTARIZE:-}" ]]; then
-  : "${APPLE_ID:?先 export APPLE_ID=你的AppleID邮箱}"
-  : "${APPLE_APP_PASSWORD:?先 export APPLE_APP_PASSWORD=App专用密码}"
-fi
+NOTARY_PROFILE="${NOTARY_PROFILE:-audio-switch}"
 
 echo "==> 构建 $VERSION"
 xcodebuild -project "$ROOT_DIR/音频切换.xcodeproj" -scheme "音频切换" \
@@ -43,8 +40,7 @@ if [[ -z "${SKIP_NOTARIZE:-}" ]]; then
   echo "==> 提交公证（Apple 排队可能要几分钟到一小时）"
   ditto -c -k --keepParent "$APP" "$OUT_DIR/notarize.zip"
   xcrun notarytool submit "$OUT_DIR/notarize.zip" \
-    --apple-id "$APPLE_ID" --team-id "$TEAM_ID" \
-    --password "$APPLE_APP_PASSWORD" --wait
+    --keychain-profile "$NOTARY_PROFILE" --wait
 
   echo "==> 装订票据"
   xcrun stapler staple "$APP"
