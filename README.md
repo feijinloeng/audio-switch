@@ -12,6 +12,8 @@
   <img src="https://img.shields.io/badge/macOS-14.2%2B-111111?logo=apple&logoColor=white" alt="macOS 14.2 或更高版本">
   <img src="https://img.shields.io/badge/Swift-5.9%2B-F05138?logo=swift&logoColor=white" alt="Swift 5.9 或更高版本">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green.svg" alt="MIT License"></a>
+  <a href="https://github.com/feijinloeng/audio-switch/actions/workflows/ci.yml"><img src="https://github.com/feijinloeng/audio-switch/actions/workflows/ci.yml/badge.svg" alt="CI 状态"></a>
+  <a href="https://github.com/feijinloeng/audio-switch/releases/latest"><img src="https://img.shields.io/github/v/release/feijinloeng/audio-switch" alt="最新版本"></a>
 </p>
 
 ## 这是什么
@@ -54,6 +56,33 @@
 | Mac 自带扬声器 | 1 路 | Mac 内置音频输出 |
 | iPhone 桥接音箱 | 1 台 | Mac → 局域网 → iPhone → 蓝牙音箱 |
 | **同时发声的输出点** | **最多 5 个** | 3 台蓝牙音箱 + Mac 扬声器 + 1 台 iPhone 桥接音箱 |
+
+## 下载安装
+
+### macOS App
+
+1. 打开 [最新版本 Release](https://github.com/feijinloeng/audio-switch/releases/latest)。
+2. 下载 `audio-switch-macos-arm64-*.dmg`，目前只提供 Apple 芯片（arm64）版本。
+3. 把 App 拖进「应用程序」文件夹，然后打开。
+
+安装包已用 Developer ID 签名，但尚未通过 Apple 公证。首次打开如果提示「无法验证开发者」：
+
+1. 在 Finder 里右键点击 App，选择「打开」。
+2. 或者执行：`xattr -dr com.apple.quarantine /Applications/音频切换.app`
+
+下载后可以用同样放在 Release 里的 `SHA256SUMS.txt` 校验文件完整性：
+
+```bash
+shasum -a 256 -c SHA256SUMS.txt
+```
+
+### iPhone 伴侣
+
+iPhone 伴侣不公开上架 App Store，在商店里搜不到，只能通过 Mac App 里的链接安装：
+
+1. 打开 Mac App，点击「下载 iPhone 伴侣」。
+2. 用 iPhone 相机扫描二维码，或者复制链接发送到 iPhone。
+3. 在 iPhone 上完成安装，并保证 iPhone 与 Mac 在同一个局域网内。
 
 ## 实际界面
 
@@ -139,7 +168,9 @@ flowchart LR
 | 音频切换（Mac） | 1.3 | 2 |
 | 音频切换伴侣（iPhone） | 1.2 | 1 |
 
-## 快速开始
+## 从源码构建
+
+只是想使用的话，直接看上面的「下载安装」即可；下面是开发者的构建步骤。
 
 ### 1. 准备环境
 
@@ -150,8 +181,8 @@ flowchart LR
 ### 2. 获取代码
 
 ```bash
-git clone <你的仓库地址>
-cd <仓库目录>
+git clone https://github.com/feijinloeng/audio-switch.git
+cd audio-switch
 ```
 
 ### 3. 运行测试
@@ -217,13 +248,19 @@ Scripts/                         本地构建、运行和日志脚本
 2. 音箱同步体验。
 3. 崩溃或播放异常。
 
-也欢迎提交 Pull Request。提交代码前，请至少运行：
+提交 Issue 前请先看 [CONTRIBUTING.md](CONTRIBUTING.md)。也欢迎提交 Pull Request。提交代码前，请至少运行：
 
 ```bash
 swift test -Xswiftc -strict-concurrency=complete
 ```
 
 如果改动了 Xcode 工程或 App 配置，还请分别验证 Mac App 和 iPhone 伴侣可以无签名构建。
+
+发现安全问题时，请不要开公开 Issue，按 [SECURITY.md](SECURITY.md) 的方式私下报告。
+
+## 更新日志
+
+版本变化记录在 [CHANGELOG.md](CHANGELOG.md)。
 
 ## 第三方组件
 
