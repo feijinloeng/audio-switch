@@ -72,3 +72,18 @@ CI 也会跑同样的检查，PR 必须全绿才能合并。
 5. `Scripts/build_and_run.sh --logs` 的相关日志。
 
 设备兼容性问题很有价值，但请注意：Mac 蓝牙能同时带几台音箱取决于硬件，见 README 的「已知边界」。
+
+## 维护者发版
+
+1. 在 [appleid.apple.com](https://appleid.apple.com) 生成一个 App 专用密码。
+2. 运行：
+
+```bash
+export APPLE_ID=你的AppleID邮箱
+export APPLE_APP_PASSWORD=abcd-efgh-ijkl-mnop
+Scripts/release.sh 1.4.0
+```
+
+3. 用脚本输出的 `gh release create` 命令发布。
+
+脚本会依次完成：构建 → Developer ID 签名 → 公证 → 装订票据 → 打包 dmg/zip → 生成 SHA256SUMS。证书需要在本机 Keychain 里（Xcode → Settings → Accounts → Manage Certificates → Developer ID Application）。
