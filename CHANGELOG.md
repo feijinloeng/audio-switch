@@ -4,6 +4,13 @@
 
 ## [Unreleased]
 
+## [1.3.1] - 2026-10-21
+
+### 变更
+
+- 安装包通过 Apple 公证并装订票据，双击即可打开。
+- App 版本号改为跟随 Xcode 构建配置，不再写死在 Info.plist。
+
 ## [1.3.0] - 2026-09-06
 
 ### 新增
@@ -25,5 +32,6 @@
 - 安装包未公证。
 - Mac 直连蓝牙音箱超过 3 台会断连，第 4 台需要 iPhone 桥接。
 
-[Unreleased]: https://github.com/feijinloeng/audio-switch/compare/v1.3.0...HEAD
+[Unreleased]: https://github.com/feijinloeng/audio-switch/compare/v1.3.1...HEAD
+[1.3.1]: https://github.com/feijinloeng/audio-switch/releases/tag/v1.3.1
 [1.3.0]: https://github.com/feijinloeng/audio-switch/releases/tag/v1.3.0

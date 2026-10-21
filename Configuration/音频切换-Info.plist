@@ -2,41 +2,41 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>LSApplicationCategoryType</key>
-    <string>public.app-category.music</string>
-    <key>LSUIElement</key>
-    <true/>
-    <key>LSMultipleInstancesProhibited</key>
-    <true/>
-    <key>CFBundleName</key>
-    <string>音频切换</string>
-    <key>CFBundleDisplayName</key>
-    <string>音频切换</string>
-    <key>CFBundleExecutable</key>
-    <string>YinPinQieHuan</string>
-    <key>CFBundleIconFile</key>
-    <string>AppIcon</string>
-    <key>CFBundleIconName</key>
-    <string>AppIcon</string>
-    <key>CFBundleIdentifier</key>
-    <string>com.mankeipun.yinpinqiehuan</string>
-	<key>CFBundleVersion</key>
-	<string>2</string>
+	<key>CFBundleDisplayName</key>
+	<string>音频切换</string>
+	<key>CFBundleExecutable</key>
+	<string>YinPinQieHuan</string>
+	<key>CFBundleIconFile</key>
+	<string>AppIcon</string>
+	<key>CFBundleIconName</key>
+	<string>AppIcon</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.mankeipun.yinpinqiehuan</string>
+	<key>CFBundleName</key>
+	<string>音频切换</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.3</string>
-    <key>CFBundlePackageType</key>
-    <string>APPL</string>
-    <key>ITSAppUsesNonExemptEncryption</key>
-    <false/>
-    <key>NSHumanReadableCopyright</key>
-    <string>Copyright © 2026 音频切换. All rights reserved.</string>
-    <key>NSAudioCaptureUsageDescription</key>
-    <string>音频切换需要访问正在播放的系统音频，才能识别应用并将其声音发送到你选择的输出设备。</string>
-    <key>NSBonjourServices</key>
-    <array>
-        <string>_yinpin-panorama._tcp</string>
-    </array>
-    <key>NSLocalNetworkUsageDescription</key>
-    <string>用于让 iPhone 伴侣自动发现这台 Mac，并接收全景播放音频。</string>
+	<string>$(MARKETING_VERSION)</string>
+	<key>CFBundleVersion</key>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.music</string>
+	<key>LSMultipleInstancesProhibited</key>
+	<true/>
+	<key>LSUIElement</key>
+	<true/>
+	<key>NSAudioCaptureUsageDescription</key>
+	<string>音频切换需要访问正在播放的系统音频，才能识别应用并将其声音发送到你选择的输出设备。</string>
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_yinpin-panorama._tcp</string>
+	</array>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright © 2026 音频切换. All rights reserved.</string>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>用于让 iPhone 伴侣自动发现这台 Mac，并接收全景播放音频。</string>
 </dict>
 </plist>

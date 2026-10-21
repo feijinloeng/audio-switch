@@ -65,10 +65,10 @@
 2. 下载 `audio-switch-macos-arm64-*.dmg`，目前只提供 Apple 芯片（arm64）版本。
 3. 把 App 拖进「应用程序」文件夹，然后打开。
 
-安装包已用 Developer ID 签名，但尚未通过 Apple 公证。首次打开如果提示「无法验证开发者」：
+安装包已通过 Apple 公证并装订票据，正常情况下双击即可打开。如果仍然提示「无法验证开发者」：
 
-1. 在 Finder 里右键点击 App，选择「打开」。
-2. 或者执行：`xattr -dr com.apple.quarantine /Applications/音频切换.app`
+1. 先确认下载完整（见下面的校验方式）。
+2. 在 Finder 里右键点击 App，选择「打开」。
 
 下载后可以用同样放在 Release 里的 `SHA256SUMS.txt` 校验文件完整性：
 
@@ -165,7 +165,7 @@ flowchart LR
 
 | App | 版本 | 构建号 |
 | --- | --- | --- |
-| 音频切换（Mac） | 1.3 | 2 |
+| 音频切换（Mac） | 1.3.1 | 3 |
 | 音频切换伴侣（iPhone） | 1.2 | 1 |
 
 ## 从源码构建

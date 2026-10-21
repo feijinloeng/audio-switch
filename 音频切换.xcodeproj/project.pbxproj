@@ -358,7 +358,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Configuration/音频切换.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				EXECUTABLE_NAME = YinPinQieHuan;
 				GENERATE_INFOPLIST_FILE = NO;
@@ -369,7 +369,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.2;
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.3.1;
 				OTHER_LDFLAGS = (
 					"-lc++",
 					"$(BUILT_PRODUCTS_DIR)/libRealtimeCore.a",
@@ -390,7 +390,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Configuration/音频切换.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				EXECUTABLE_NAME = YinPinQieHuan;
 				GENERATE_INFOPLIST_FILE = NO;
@@ -401,7 +401,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.2;
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.3.1;
 				OTHER_LDFLAGS = (
 					"-lc++",
 					"$(BUILT_PRODUCTS_DIR)/libRealtimeCore.a",
