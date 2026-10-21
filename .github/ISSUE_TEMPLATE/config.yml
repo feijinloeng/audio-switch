@@ -1,8 +1,0 @@
-blank_issues_enabled: false
-contact_links:
-  - name: 使用说明
-    url: https://github.com/feijinloeng/audio-switch#readme
-    about: 下载、安装、支持的设备和已知限制
-  - name: 私下报告安全问题
-    url: https://github.com/feijinloeng/audio-switch/security/advisories/new
-    about: 安全问题请不要开公开 Issue
