@@ -1,0 +1,74 @@
+name: Bug 报告
+description: 播放、连接、崩溃等异常
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        请先看 README 的「已知边界」，蓝牙连接数和音质限制可能来自硬件。
+        安全问题请不要在这里发，按 SECURITY.md 私下报告。
+
+  - type: input
+    id: app-version
+    attributes:
+      label: App 版本
+      placeholder: 例如 1.3 (2)
+    validations:
+      required: true
+
+  - type: input
+    id: macos-version
+    attributes:
+      label: macOS 版本和 Mac 型号
+      placeholder: 例如 macOS 14.5 / MacBook Air M2
+    validations:
+      required: true
+
+  - type: input
+    id: speakers
+    attributes:
+      label: 蓝牙音箱型号和数量
+      placeholder: 例如 3 台 JBL Flip 5
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: mode
+    attributes:
+      label: 出现问题的模式
+      options:
+        - label: 按 App 路由
+        - label: 全景播放
+        - label: iPhone 伴侣
+        - label: 两者都有
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤
+      placeholder: |
+        1. 连接 3 台音箱
+        2. 打开全景播放
+        3. 播放 5 分钟后第 2 台开始断流
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望结果与实际结果
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: 日志
+      description: 用 `Scripts/build_and_run.sh --logs` 运行时抓取的日志。粘贴前请删掉个人信息。
+      render: shell
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: 其他补充
+      description: 截图、录屏、是否同时连接了蓝牙鼠标或键盘等。

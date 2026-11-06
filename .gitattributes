@@ -1,0 +1,13 @@
+* text=auto eol=lf
+
+*.png binary
+*.icns binary
+*.jpg binary
+*.dmg binary
+*.zip binary
+
+*.pbxproj text eol=lf
+*.xcworkspacedata text eol=lf
+*.xcscheme text eol=lf
+*.plist text eol=lf
+*.strings text eol=lf

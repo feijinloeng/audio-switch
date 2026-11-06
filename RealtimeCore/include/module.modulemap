@@ -1,0 +1,4 @@
+module RealtimeCore {
+  umbrella header "RealtimeCore.h"
+  export *
+}
